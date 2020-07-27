@@ -101,7 +101,6 @@ function runRace(raceID) {
 			getRace(raceID)
 			.then((race) => {
 				if(race.status === "in-progress") {
-					console.log(race)
 					renderAt('#leaderBoard', raceProgress(race.positions))
 				} else if (race.status === "finished"){
 					clearInterval(raceInterval)
