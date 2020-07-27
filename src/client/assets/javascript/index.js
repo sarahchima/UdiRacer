@@ -1,7 +1,7 @@
 // PROVIDED CODE BELOW (LINES 1 - 80) DO NOT REMOVE
 
 // The store will hold all information needed globally
-var store = {
+let store = {
 	track_id: undefined,
 	player_id: undefined,
 	race_id: undefined,
@@ -14,22 +14,19 @@ document.addEventListener("DOMContentLoaded", function() {
 })
 
 async function onPageLoad() {
-	try {
-		getTracks()
-			.then(tracks => {
-				const html = renderTrackCards(tracks)
-				renderAt('#tracks', html)
-			})
+	Promise.all([getTracks(), getRacers()])
+	.then(results => {
+		const [tracks, racers] = results;
+		const renderTracksHtml = renderTrackCards(tracks)
+		renderAt('#tracks', renderTracksHtml)
 
-		getRacers()
-			.then((racers) => {
-				const html = renderRacerCars(racers)
-				renderAt('#racers', html)
-			})
-	} catch(error) {
+		const renderRacersHtml = renderRacerCars(racers)
+		renderAt('#racers', renderRacersHtml)
+	})
+	.catch(error => {
 		console.log("Problem getting tracks and racers ::", error.message)
 		console.error(error)
-	}
+	})
 }
 
 function setupClickHandlers() {
