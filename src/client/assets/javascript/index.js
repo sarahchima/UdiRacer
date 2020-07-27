@@ -370,7 +370,7 @@ function startRace(id) {
 		method: 'POST',
 		...defaultFetchOpts(),
 	})
-	.then(res => res.json())
+	.then(res => res.status)
 	.catch(err => console.log("Problem with Race request::", err))
 }
 
